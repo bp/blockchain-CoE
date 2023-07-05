@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata :
+  name: climate-dao-zokrates-worker
+  namespace: climatedao
+  labels:
+    app: climate-dao-zokrates-worker
+spec:
+  selector:
+    matchLabels:
+      app: climate-dao-zokrates-worker
+  replicas: 1
+  template:
+    metadata:
+      labels: 
+        app: climate-dao-zokrates-worker
+    spec:
+      containers:
+        - name: climate-dao-zokrates-worker
+          image: ghcr.io/eyblockchain/climate-dao-zokrates-worker:latest
+          resources:
+            requests:
+              memory: "11G"
+              cpu: "6"
+            limits:
+              memory: "11G"
+              cpu: "7"
+          # readinessProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     path: /
+          #     port: 8001
+          #     scheme: HTTP
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   timeoutSeconds: 10
+          #   initialDelaySeconds: 30
+          env:
+            - name: CIRCUITS_FOLDER
+              value: /app/circuits
+            - name: OUTPUT_FOLDER
+              value: /app/output
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url
+          ports:
+            - containerPort: 8001
+              protocol: TCP
+          securityContext:
+            runAsUser: 1000
+          volumeMounts:
+            - mountPath: /app/output
+              name: proving-files
+      volumes:
+        - name: proving-files
+          persistentVolumeClaim:
+            claimName: climatedao-proving-files
+      imagePullSecrets:
+        - name: climatedaoregistry
+      terminationGracePeriodSeconds: 90

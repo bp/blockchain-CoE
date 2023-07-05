@@ -1,0 +1,12 @@
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: climatedao-proving-files
+  namespace: climatedao
+spec:
+  storageClassName: azurefile
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi

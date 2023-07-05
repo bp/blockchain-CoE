@@ -1,0 +1,101 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata :
+  name: climate-dao-event-listener
+  namespace: climatedao
+  labels:
+    app: climate-dao-event-listener
+spec:
+  selector:
+    matchLabels:
+      app: climate-dao-event-listener
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: climate-dao-event-listener
+    spec:
+      containers:
+        - name: climate-dao-event-listener
+          image: ghcr.io/eyblockchain/climate-dao-event-listener:latest
+          resources:
+            requests:
+              memory: "1G"
+              cpu: "1"
+            limits:
+              memory: "2G"
+              cpu: "2"
+          # readinessProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          #     scheme: HTTP
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   timeoutSeconds: 10
+          #   initialDelaySeconds: 30
+          env:
+            - name: JSON_RPC
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: json_rpc
+            - name: JSON_RPC_WS
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: json_rpc_ws
+            - name: INFURA_PROJECTID
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: infura_project_id
+            - name: CHAIN_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: chain_id
+            - name: CLIMATE_DAO_CONTRACT
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: climate_dao_contract
+            - name: USDC_CONTRACT
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: usdc_contract
+            - name: ETHEREUM_EVENT_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: ethereum_event_queue_name
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url
+            - name: REDIS_URL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url-host
+            - name: REDIS_URL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url-port
+            - name: REDIS_URL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url-password
+          ports:
+            - containerPort: 8002
+              protocol: TCP
+          securityContext:
+            runAsUser: 1000
+      imagePullSecrets:
+        - name: climatedaoregistry
+      terminationGracePeriodSeconds: 90

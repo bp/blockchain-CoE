@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: climatedao-config
+  namespace: climatedao
+data:
+  json_rpc: https://ropsten.infura.io/v3/INFURA_PROJECT_ID
+  json_rpc_ws: wss://ropsten.infura.io/ws/v3/INFURA_PROJECT_ID
+  infura_project_id: INFURA_PROJECT_ID
+  chain_id: '3'
+  usdc_contract: '0x94d26C01C720085CE99df4bF24D601C639***'
+  climate_dao_contract: '0xcdaD476DeBf4230161fdabC6435777cbC*****'
+  ethereum_event_queue_name: 'contract-event'
+  acuant_callback_username: climate

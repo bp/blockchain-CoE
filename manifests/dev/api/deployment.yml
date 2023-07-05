@@ -1,0 +1,170 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata :
+  name: climate-dao-api
+  namespace: climatedao
+  labels:
+    app: climate-dao-api
+spec:
+  selector:
+    matchLabels:
+      app: climate-dao-api
+  replicas: 1
+  template:
+    metadata:
+      labels: 
+        app: climate-dao-api
+    spec:
+      containers:
+        - name: climate-dao-api
+          image: ghcr.io/eyblockchain/climate-dao-api:latest
+          resources:
+            requests:
+              memory: "1G"
+              cpu: "1"
+            limits:
+              memory: "2G"
+              cpu: "2"
+          # readinessProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          #     scheme: HTTP
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   timeoutSeconds: 10
+          #   initialDelaySeconds: 30
+          env:
+            - name: GAS_PRICE
+              value: '50000000000'
+            - name: CRON_INTERVAL_IN_MINUTES
+              value: '5'
+            - name: RUN_JOBS
+              value: 'true'
+            - name: COOKIE_DOMAIN
+              value: climatedao.uksouth.cloudapp.azure.com
+            - name: APPLICATION_URL
+              value: https://climatedao.uksouth.cloudapp.azure.com
+            - name: ZOKRATES_WORKER_URL
+              value: http://climate-dao-zokrates-worker.climatedao.svc.cluster.local
+            - name: ADMIN_ADDRESS
+              value: '0x6Af964dFf54c8b43731891E0288057E59991FF7B'
+            - name : ITX_ADDRESS
+              value: '0x71D487A29B3aDD8Da448686A41bf6eC8a1e229b4'
+            - name: JSON_RPC
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: json_rpc
+            - name: INFURA_PROJECTID
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: infura_project_id
+            - name: CHAIN_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: chain_id
+            - name: CLIMATE_DAO_CONTRACT
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: climate_dao_contract
+            - name: USDC_CONTRACT
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: usdc_contract
+            - name: ETHEREUM_EVENT_QUEUE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: climatedao-config
+                  key: ethereum_event_queue_name
+            - name: IDMA_API_URL
+              value: https://staging.identitymind.com
+            - name: IDMA_API_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: idmaApiUserName
+            - name: IDMA_API_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: idmaApiPassword
+            - name: ACUANT_GO_URL
+              value: https://go-stg.acuant.com
+            - name: ACUANT_CERT
+              value: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqPUvTUy2Pza92EGQGLpqIvnqTrZxrXRaAY1ZKuAKYOAmk56c3lJJbkZOczzgtSIN6S5AyNtp3GCUgiAdfoCkngbaRvhdK92+ij2tCglgwZVYMNFDLF5HbhU7Vohxk2aR3NDUzD2ruHt9MbD5/2f7cmyAHjDSvbH4x4dsgE7DHe/qdPjqhtXmSaWVIy2ProJqiaGgvOi+DtXnqddQvxmP5KsYqlvN2ZGizl1CWHpoN1wCsZMrJPyBxQ1t/lGv+3HGu3p3cjFgM/j6OJZzQscc3FLZ4f7rIMR2V31MeqbRpReReS3Ibw0xgdUxSumc8fISO8UBMdfhp3wL0MLCpUoyGQIDAQAB'
+            - name: ACUANT_CALLBACK_USERNAME
+              value: climate
+            - name: ACUANT_CALLBACK_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: acuantCallbackPassword
+            - name: TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: token-secret
+            - name: ENC_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: enc-secret
+            - name: MONGO_URL
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: mongo-url
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url
+            - name: REDIS_URL_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url-host
+            - name: REDIS_URL_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url-port
+            - name: REDIS_URL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: redis-url-password
+            - name: AZURE_KEY_VAULT_URL
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: az-keyvault-url
+            - name: AZURE_TENANT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: az-tenant-id
+            - name: AZURE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: az-client-id
+            - name: AZURE_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: climate-secrets
+                  key: az-client-secret
+          ports:
+            - containerPort: 8000
+              protocol: TCP
+          securityContext:
+            runAsUser: 1000
+      imagePullSecrets:
+        - name: climatedaoregistry
+      terminationGracePeriodSeconds: 90
