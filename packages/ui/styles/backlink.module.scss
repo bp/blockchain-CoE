@@ -1,0 +1,13 @@
+@import './variables.scss';
+
+.linktoprojects{
+  color: $light-black;
+  font-size: 1.6rem;
+  letter-spacing: 0;
+  line-height: 2.1rem;
+  background-image: url('/assets/images/back-arrow.png');
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  background-position: left center;
+  cursor: pointer;
+}

@@ -1,0 +1,23 @@
+@import './variables.scss';
+
+.listcardItem{
+  h3{
+    color: $primary-color;
+    font-size: 3rem;
+    letter-spacing: 0;
+    line-height: 4rem;
+    margin: 0;
+    font-weight: 300;
+  }
+  ul{
+    list-style: "*";
+    padding-left: 1rem;
+    li{
+      color: $black;
+      font-size: 1.6rem;
+      letter-spacing: 0;
+      line-height: 2.1rem;
+      padding: 0.5rem 0rem 0.5rem 0.5rem;
+    }
+  }
+}

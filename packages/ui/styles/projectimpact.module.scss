@@ -1,0 +1,49 @@
+@import './variables.scss';
+$tablet: 992px;
+.projectimpact {
+  margin: 4rem 0 11rem 0;
+  h3 {
+    color: $primary-color;
+    font-size: 3rem;
+    letter-spacing: 0;
+    line-height: 4rem;
+    font-weight: 300;
+    margin: 0 0 2rem 0;
+  }
+  .projectimpactInner {
+    display: flex;
+
+    .imageContainer {
+      flex-basis: 50%;
+      figure {
+        margin: 0;
+      }
+    }
+
+    .articleSection {
+      flex-basis: 50%;
+      padding: 0 2rem;
+      article {
+        color: $black;
+        font-family: Roboto;
+        font-size: 1.6rem;
+        letter-spacing: 0;
+        line-height: 2rem;
+        font-weight: 300;
+      }
+    }
+
+    @media screen and (max-width: $tablet) {
+      
+        
+        &.projectimpactInner{
+          flex-direction: column;
+
+          .imageContainer{
+            text-align: center;
+            margin-bottom: 2rem;
+          }
+        }
+    }
+  }
+}

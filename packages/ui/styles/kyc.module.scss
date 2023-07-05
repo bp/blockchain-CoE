@@ -1,0 +1,43 @@
+
+@import './variables.scss';
+
+.kycSection{
+  min-height: 105vh;
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+  margin-bottom: 7rem;
+  h2{
+    font-size: 3rem;
+    letter-spacing: 0;
+    line-height: 40px;
+    font-weight: 300;
+    color: $primary-color;
+    text-align: center;
+  }
+  .message{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    h2{
+      font-size: 3rem;
+      letter-spacing: 0;
+      line-height: 40px;
+      font-weight: 300;
+      color: $primary-color;
+    }
+    p {
+      font-size: 1.6rem;
+      letter-spacing: 0;
+      line-height: 21px;
+      margin: 0 0 3.3rem 0;
+    }
+  }
+  iframe{
+    height: 100vh;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+}

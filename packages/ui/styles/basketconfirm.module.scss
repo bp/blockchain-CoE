@@ -1,0 +1,84 @@
+@import './variables.scss';
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.confirmcontributions {
+  .title {
+    color: $primary-color;
+    font-size: 3rem;
+    letter-spacing: 0;
+    line-height: 4rem;
+    font-weight: 400;
+    margin: 4rem 0 1rem 0;
+    animation: fadeIn 1s;
+  }
+
+  .messageSection {
+    display: flex;
+    animation: fadeIn 1s;
+    article {
+      color: $black;
+      font-size: 1.6rem;
+      letter-spacing: 0;
+      line-height: 2.4rem;
+      padding-right: 14rem;
+    }
+
+    .btnContainer {
+      // margin: 3rem 0;
+      .contributeBtn {
+        margin: auto;
+        min-width: 23rem;
+      }
+    }
+  }
+  .projects {
+    margin: 4rem 0 4rem 0;
+    .project {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+
+  article {
+    color: $black;
+    font-size: 1.6rem;
+    letter-spacing: 0;
+    line-height: 2.4rem;
+  }
+
+  // & > * {
+  //   animation: fadeIn 1s;
+  // }
+}
+
+@media (max-width: 800px) {
+  // .basketWithData{
+  //   .projects {
+  //     .project {
+  //       width: 100%;
+  //     }
+  //   }
+  // }
+}
+
+@media (max-width: 860px) {
+  .confirmcontributions {
+    .messageSection {
+      display: block;
+      padding: 1rem;
+
+      article {
+        padding-right: unset;
+        padding-bottom: 2rem;
+      }
+    }
+  }
+}

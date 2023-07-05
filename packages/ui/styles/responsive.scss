@@ -1,0 +1,63 @@
+// @media (min-width: 320px) { 
+//   html { font-size: 7px; }
+//   .container{
+//     width: 100%;
+//     padding-left: 15px;
+//     padding-right: 15px;
+//   }
+// }
+
+
+
+// /* Small devices (landscape phones, 576px and up) */
+// @media (min-width: 576px) { 
+//   html { font-size: 8px; }
+//   .container{
+//     width: 100%;
+//     padding-left: 15px;
+//     padding-right: 15px;
+//   }
+// }
+
+// /* Medium devices (tablets, 768px and up) */
+// @media (min-width: 767px) { 
+//   html { font-size: 9px; }
+//   .container{
+//     width: 720px;
+//   }
+//  }
+
+// /* Large devices (desktops, 992px and up) */
+// @media (min-width: 992px) { 
+//   html { font-size: 10px; }
+//   .container{
+//     width: 960px;
+//   }
+//  }
+
+// /* Extra large devices (large desktops, 1200px and up) */
+// @media (min-width: 1200px) { 
+//   html { font-size: 12px; }
+//   .container{
+//     width: 1140px;
+//   }
+//  }
+
+// /* XXL devices (large desktops, 1400px and up) */
+// @media (min-width: 1440px) { 
+//   html { font-size: 13px; }
+//   .container{
+//     width: 1320px;
+//   }
+//  }
+
+@media (max-width: 1440px) { 
+  .container{
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+ }
+
+ @media (max-width: 700px) { 
+  html { font-size: 9px; }
+ }

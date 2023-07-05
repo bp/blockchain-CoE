@@ -1,0 +1,496 @@
+@import './variables.scss';
+$medium: 1064px;
+$tablet: 1064px;
+$largemobile: 768px;
+$mediummobile: 600px;
+$mobile: 540px;
+.projectdetail {
+  .projectDetailInner {
+    margin-top: 5rem;
+    .backToProjectList {
+      color: $light-black;
+      font-size: 1.6rem;
+      letter-spacing: 0;
+      line-height: 2rem;
+      &::before {
+        color: $primary-color;
+        content: ' \003C';
+        font-size: 3rem;
+      }
+    }
+    .topSection {
+      margin-top: 4rem;
+      display: flex;
+      flex-direction: row;
+      padding-bottom: 4rem;
+      //padding-bottom: 25rem;
+      aside {
+        &.imgBlock {
+          // min-width: 65rem;
+          width: 44%;
+          figure {
+            margin: 0;
+          }
+        }
+        &.projectContent {
+          width: 56%;
+        }
+        h3 {
+          color: $primary-color;
+          font-size: 3rem;
+          letter-spacing: 0;
+          line-height: 4rem;
+          margin: 0;
+          font-weight: 300;
+        }
+
+        h4 {
+          opacity: 0.5;
+          color: $grey;
+          font-size: 1.4rem;
+          font-weight: 700;
+          letter-spacing: 0;
+          line-height: 2rem;
+          margin: 0.8rem 0 2rem 0;
+        }
+
+        article {
+          color: $grey;
+          font-size: 1.6rem;
+          letter-spacing: 0;
+          line-height: 2rem;
+          font-weight: 300;
+        }
+        .inputWrapper {
+          .btnBasket {
+            border-radius: 2rem;
+            width: 18rem;
+            font-size: 1.2rem;
+            height: 3rem;
+            &:hover {
+              color: $primary-color-hover;
+            }
+          }
+          .contributionAdvice {
+            border-radius: 0.9rem;
+            background: $white;
+            padding: 1rem 1rem 0.5rem 1rem;
+            transition: all 0.6s ease;
+            margin: 1rem 0 1rem 0;
+            border: 1px solid rgb(69 173 65 / 24%);
+            width: 57%;
+            box-shadow: 0px 0px 19px -1px rgb(69 173 65 / 24%);
+
+            p {
+              margin: 0;
+              font-size: 1.4rem;
+              color: $black;
+              text-align: center;
+              margin-bottom: 0.5rem;
+            }
+
+            &.hide {
+              opacity: 0;
+            }
+
+            &.show {
+              opacity: 1;
+            }
+          }
+
+          .addToBasket {
+            margin-top: 1rem;
+            display: flex;
+            position: relative;
+            max-width: 42rem;
+            input {
+              width: 100%;
+              border-radius: 2rem;
+              border: 1px solid $border-grey;
+              margin-right: 0.85rem;
+              position: absolute;
+              padding-right: calc((100% - 2rem)/2);
+              font-size: 1.2rem;
+            }
+            .btn{
+              right: 0;
+              position: absolute;
+              width: calc((100% - 2rem) / 2);
+            }
+          }
+        }
+      }
+    }
+
+    .contributionBubblesContainer {
+      //height: 50px;
+      width: 100%;
+      margin-bottom: 4rem;
+      display: inline-block;
+
+      .contributionDetails {
+        content: '';
+        //position: absolute;
+        background-repeat: no-repeat;
+        background-size: contain;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        animation: fadeIn 1s;
+        float: left;
+        margin-right: 2.5rem;
+        background-position: bottom;
+        margin-bottom: 2.5rem;
+
+        .title {
+          color: #ffffff;
+          font-size: 1.6em;
+          letter-spacing: 0;
+          font-weight: 300;
+          line-height: 1.5rem;
+          width: 100%;
+        }
+
+        .data {
+          color: #ffffff;
+          font-size: 1.6em;
+          font-weight: 400;
+          letter-spacing: 0;
+          line-height: 1.5rem;
+          width: 100%;
+          margin-top: 1rem;
+        }
+
+        &:nth-of-type(1) {
+          width: 14rem;
+          height: 14rem;
+          padding: 0rem 1rem 0rem 2.5rem;
+          background-image: url('/assets/images/projectdetails1.svg');
+        }
+
+        &:nth-of-type(2) {
+          width: 14rem;
+          height: 14rem;
+          padding: 3rem 1rem 0rem 3rem;
+          background-image: url('/assets/images/contribution.svg');
+        }
+
+        &:nth-of-type(3) {
+          width: 14rem;
+          height: 14rem;
+          padding: 0rem 1rem 0rem 2.5rem;
+          background-image: url('/assets/images/projectdetails3-1.svg');
+        }
+
+        &:nth-of-type(4) {
+          width: 14rem;
+          height: 14rem;
+          padding: 0rem 1rem 0rem 2.5rem;
+          background-image: url('/assets/images/howitworksv3.svg');
+        }
+
+        &:nth-of-type(5) {
+          width: 14rem;
+          height: 14rem;
+          padding: 0rem 1rem 0rem 2.5rem;
+          background-image: url('/assets/images/howitworksv4.svg');
+        }
+      }
+    }
+
+    .aboutProject,
+    .aboutUniversity {
+      padding: 4rem 8rem 6.5rem 8rem;
+      border: 1px solid $primary-color;
+      border-radius: 19px;
+      background-color: #ffffff;
+      box-shadow: 0 0 20px -1px $greenshadow;
+      h3 {
+        color: $primary-color;
+        font-size: 3rem;
+        letter-spacing: 0;
+        line-height: 4rem;
+        font-weight: 300;
+        margin: 0;
+      }
+
+      article {
+        color: $black;
+        font-size: 1.6rem;
+        letter-spacing: 0;
+        line-height: 2.1rem;
+        font-weight: 300;
+      }
+
+      .truncate {
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+    }
+
+    .aboutProject {
+      .abouthead {
+        display: flex;
+        margin-bottom: 1.8rem;
+        justify-content: space-between;
+      }
+    }
+
+    .aboutUniversity {
+      position: relative;
+      &::after {
+        width: 16rem;
+        height: 14rem;
+        content: '';
+        position: absolute;
+        background-image: url(/assets/images/university-bubble.svg);
+        right: -3%;
+        background-size: contain;
+        background-repeat: no-repeat;
+        bottom: -5.6rem;
+        z-index: -1;
+      }
+    }
+
+    .fundingDeliverables {
+      margin: 4rem 0;
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+
+      .cardItem {
+        flex-basis: 48%;
+        border: 1px solid $primary-color;
+        border-radius: 19px;
+        background-color: #ffffff;
+        box-shadow: 0 0 20px -1px $greenshadow;
+        padding: 4.5rem 6rem 4rem 6rem;
+      }
+
+      &::before {
+        content: '';
+        width: 80px;
+        height: 87px;
+        position: absolute;
+        z-index: -1;
+        background-image: url(/assets/images/funding.png);
+        background-repeat: no-repeat;
+        bottom: -37px;
+        left: -40px;
+        background-size: contain;
+      }
+    }
+  }
+
+  @media screen and (max-width: $medium) {
+    &.projectdetail {
+      .projectDetailInner {
+        .aboutUniversity {
+          padding: 2rem;
+        }
+
+        .aboutProject {
+          padding: 2rem;
+        }
+
+        .fundingDeliverables {
+          .cardItem {
+            padding: 2rem;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $tablet) {
+    &.projectdetail {
+      .projectDetailInner {
+        .topSection {
+          flex-direction: column-reverse;
+          aside {
+            width: 100%;
+
+            &:nth-of-type(2) {
+              margin-bottom: 5rem;
+            }
+
+            &.imgBlock {
+              min-width: 45rem;
+              .projectThumbnailContainer {
+                max-width: 450px;
+                margin: auto;
+              }
+            }
+          }
+        }
+
+        .contributionBubblesContainer {
+          display: table;
+          margin: auto;
+          width: auto;
+          margin-bottom: 4rem;
+
+          .contributionDetails {
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $largemobile) {
+    &.projectdetail {
+      .projectDetailInner {
+        .topSection {
+          flex-direction: column-reverse;
+          aside {
+            width: 100%;
+
+            &:nth-of-type(2) {
+              margin-bottom: 7rem;
+            }
+
+            &.imgBlock {
+              min-width: auto;
+              .projectThumbnailContainer {
+                // max-width: 32rem;
+                margin: auto;
+                figure {
+                  img {
+                    width: 100%;
+                  }
+                }
+
+                // .contributionDetails {
+                //   font-size: 0.8rem;
+                //   .data {
+                //     margin-top: 0.3rem;
+                //   }
+                //   &:nth-of-type(4) {
+                //     right: -34%;
+                //     width: 10rem;
+                //     height: 11.3rem;
+                //   }
+
+                //   &:nth-of-type(3) {
+                //     bottom: -31%;
+                //     right: -13%;
+                //     width: 14rem;
+                //     height: 11rem;
+                //   }
+
+                //   &:nth-of-type(2) {
+                //     bottom: -32%;
+                //     left: 22%;
+                //     width: 12.5rem;
+                //     height: 10.5rem;
+                //   }
+
+                //   &:nth-of-type(1) {
+                //     width: 12rem;
+                //     height: 12rem;
+                //     left: -12%;
+                //   }
+                // }
+              }
+            }
+          }
+        }
+        .fundingDeliverables {
+          flex-direction: column;
+          .cardItem {
+            flex-basis: 100%;
+
+            &:nth-of-type(1) {
+              margin-bottom: 5rem;
+            }
+          }
+        }
+
+        .contributionBubblesContainer {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: space-around;
+          margin: auto;
+          width: auto;
+          margin-bottom: 4rem;
+
+          .contributionDetails {
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+            width: 12rem;
+            height: 12rem;
+
+            .title {
+              font-size: 1.3em;
+            }
+
+            .data {
+              font-size: 1.3em;
+            }
+
+            &:nth-of-type(1) {
+              padding: 0rem 1rem 0rem 1.5rem;
+            }
+
+            &:nth-of-type(2) {
+              padding: 3rem 1rem 0rem 2rem;
+            }
+
+            &:nth-of-type(3) {
+              padding: 0rem 1rem 0rem 1.5rem;
+            }
+
+            &:nth-of-type(4) {
+              padding: 0rem 1rem 0rem 1.5rem;
+            }
+
+            &:nth-of-type(5) {
+              padding: 0rem 1rem 0rem 1.5rem;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media screen and (max-width: $mobile) {
+    &.projectdetail {
+      .projectDetailInner {
+        .topSection {
+          flex-direction: column-reverse;
+          aside {
+            width: 100%;
+
+            &:nth-of-type(2) {
+              margin-bottom: 7rem;
+            }
+
+            &.imgBlock {
+              min-width: auto;
+              .projectThumbnailContainer {
+                figure {
+                  img {
+                    width: 100%;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

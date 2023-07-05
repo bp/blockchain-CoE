@@ -1,0 +1,96 @@
+@import './variables.scss';
+
+.countdownSection {
+  // height: 20rem;
+  h5{
+    font-size: 2.4rem;
+    line-height: 4rem;
+    font-weight: 300;
+    color: $primary-color;
+    margin-top: 5rem;
+    margin-bottom: 2rem;
+  }
+
+  .countdownBoxContainer{
+    display: flex;
+    .countdownBox{
+      width:14rem;
+      height: 14rem;
+      margin-right: 2rem;
+      background-color: $primary-color;
+      float: left;
+      padding: 1.6rem 2rem;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+      border-radius: 1rem;
+      box-sizing: border-box;
+      .counter{
+        font-size: 4.8rem;
+        line-height: 6rem;
+        color: #FFFFFF;
+        width: 100%;
+        text-align: left;
+      }
+      .text{
+        font-size: 2.4rem;
+        // line-height: 4rem;
+        color: #FFFFFF;
+        font-weight: 300;
+        width: 100%;
+        text-align: left;
+      }
+    }
+  }
+}
+
+
+
+.buttonContainer{
+  margin-top: 3.2rem;
+}
+
+@media (max-width: 1200px) {
+  .countdownSection{
+    h5{
+      color: black;
+
+    }
+    .countdownBoxContainer {
+      .countdownBox {
+        width: 10rem;
+        height: 10rem;
+        .counter{
+          font-size: 3.5rem;
+          line-height: 3rem;
+        }
+        .text{
+          font-size: 2rem;
+          // line-height: 3rem;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: '600px') {
+  .countdownSection {
+    // h5 {
+    //   color: $black;
+    // }
+    .countdownBoxContainer {
+      .countdownBox {
+        width: 8rem;
+        height: 8rem;
+        .counter{
+          font-size: 3rem;
+          // line-height: 3rem;
+        }
+        .text{
+          font-size: 1.5rem;
+          // line-height: 3rem;
+        }
+      }
+    }
+  }
+}

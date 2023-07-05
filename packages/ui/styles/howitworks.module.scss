@@ -1,0 +1,115 @@
+@import './variables.scss';
+
+$tablet: 992px;
+.howItWorks {
+  h3 {
+    font-size: 4.8rem;
+    line-height: 4.5rem;
+    margin: 0;
+    text-align: left;
+    font-weight: 300;
+    color: $highlight-green;
+  }
+  .content {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 3rem;
+    .item {
+      width: calc((100% - 10rem)/5);
+      .topSection {
+        color: #ffffff;
+        font-size: 6rem;
+        font-weight: bold;
+        letter-spacing: 0;
+        line-height: 8rem;
+        width: 100%;
+        height: 100px;
+        text-align: center;
+        height: 17rem;
+        background-repeat: no-repeat;
+        background-position: center;
+        display: flex;
+        align-items: center;
+        text-align: center;
+        justify-content: center;
+      }
+
+      h3 {
+        color: $primary-text-color;
+        font-size: 2.3rem;
+        letter-spacing: 0;
+        line-height: 3rem;
+        text-align: center;
+        margin: 1.5rem 0 2rem 0;
+        font-weight: 400;
+      }
+
+      p {
+        color: $primary-text-color;
+        font-size: 1.6rem;
+        letter-spacing: 0;
+        line-height: 2.2rem;
+        margin-bottom: 4.5rem;
+      }
+
+      &:first-of-type {
+        .topSection {
+          background-image: url('/assets/images/projectdetails1.svg');
+        }
+      }
+
+      &:nth-of-type(2) {
+        .topSection {
+          background-image: url('/assets/images/projectdetails3-1.svg');
+        }
+      }
+
+      &:nth-of-type(3) {
+        .topSection {
+          background-image: url('/assets/images/howitworksv3.svg');
+        }
+      }
+
+      &:nth-of-type(4) {
+        .topSection {
+          background-image: url('/assets/images/howitworksv4.svg');
+        }
+      }
+      &:nth-of-type(5) {
+        .topSection {
+          background-image: url('/assets/images/howitworksv4.svg');
+        }
+      }
+    }
+  }
+
+  .disclaimer{
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    color: $black06;
+    text-align: center;
+    padding: 3rem 10rem;
+  }
+}
+
+@media (max-width: 900px) {
+  .howItWorks{
+    .content{
+      .item{
+        width: calc((100% - 8rem)/2);
+      }
+    }
+  }
+}
+
+@media (max-width: 700px) {
+  .howItWorks{
+    .content{
+      flex-direction: column;
+      .item{
+        width: 100%;
+      }
+    }
+  }
+}

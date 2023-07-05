@@ -1,0 +1,83 @@
+@import './variables.scss';
+
+.contactSection {
+    margin-bottom: 9rem;
+    min-height: calc(100vh - 280px);
+  .contactInner {
+    max-width: 100rem;
+    display: flex;
+    width: 100%;
+    margin: auto;
+
+    .topSection {
+      //margin-top: 3rem;
+      width: 50%;
+      figure {
+        margin: auto;
+        img {
+          margin: auto;
+          max-width: 100%;
+        }
+      }
+    }
+
+    .contentSection {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      h2 {
+        font-size: 3rem;
+        color: $primary-color;
+        line-height: 4rem;
+        font-weight: 400;
+        text-align: center;
+      }
+
+      article {
+        font-size: 1.6rem;
+        color: $alternate-black;
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+
+      .blocks{
+          margin-bottom: 3.5rem;
+        h3 {
+          font-size: 1.6rem;
+          color: $alternate-black;
+          font-weight: 400;
+          text-align: center;
+        }
+
+        .mailDetails{
+          margin: auto;
+          width: 27rem;
+          display: flex;
+          justify-content: space-around;
+
+          img{
+            height: 1.3rem;
+            width: 1.3rem;
+            filter: invert(30%) sepia(40%) saturate(4398%) hue-rotate(112deg);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .contactSection{
+    .contactInner{
+      max-width: 500px;
+      margin: auto;
+      .topSection{
+        display: none;
+      }
+      .contentSection{
+        width: 100%;
+      }
+    }
+  }
+}

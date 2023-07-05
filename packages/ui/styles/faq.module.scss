@@ -1,0 +1,62 @@
+
+@import './variables.scss';
+
+.faqSection {
+  margin-top: 6rem;
+  margin-bottom: 6rem;
+    h2{
+      font-size: 4.8rem;
+      letter-spacing: 0;
+      line-height: 6rem;
+      margin: 0;
+      text-align: center;
+      font-weight: 300;
+      color: $highlight-green;
+    }
+    .faqInnerContainer{
+      margin-top: 3.5rem;
+      // border: 1px solid $primary-color;
+      width: 100%;
+      // padding: 4rem 4.5rem;
+      // border-radius: 2rem;
+      // box-shadow: 0 0 2rem -0.1rem rgba(69,173,65,0.24);
+        position: relative;
+      // background-color: #FFFFFF;
+
+      &::before{
+        content: "";
+        width: 118px;
+        height: 112px;
+        background-image: url(/assets/images/faq-left.svg);
+        position: absolute;
+        right: -3%;
+        top: -18px;
+        background-repeat: no-repeat;
+        z-index: -1;
+      }
+
+      &::after{
+        content: "";
+        width: 29rem;
+        height: 27rem;
+        background-image: url(/assets/images/faq-left.svg);
+        position: absolute;
+        background-size: contain;
+        background-repeat: no-repeat;
+        left: -12rem;
+        bottom: -7rem;
+        z-index: -1;
+      }
+    }
+    .viewMore{
+      margin-top: 4.5rem;
+      text-align: center;
+      a{
+        font-size: 2.4rem;
+        line-height: 3.2rem;
+        font-weight: 300;
+        text-decoration: underline;
+
+      }
+    }
+}

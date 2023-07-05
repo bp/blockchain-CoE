@@ -1,0 +1,36 @@
+@import './variables.scss';
+
+.cookieConsent {
+  background-color: $light-black;
+  box-shadow: 0 0 2rem -1px $greenshadow;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+
+  .cookieContent{
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+    .content{
+      color: $light-white;
+      padding-right: 3rem;
+      font-size: 1.4rem;
+      letter-spacing: 0;
+      line-height: 2rem;
+
+      a{
+        text-decoration: underline;
+      }
+    }
+  }
+
+  @media (max-width: 1280px) {
+    .cookieContent{
+      padding: 2rem 3rem;
+    }
+    
+  }
+}
+
+

@@ -1,0 +1,39 @@
+@import './variables.scss';
+
+.faqItemSection {
+  .accordianInnerContainer {
+    margin-top: 2.5rem;
+    border: 1px solid $primary-color;
+    width: 100%;
+    padding: 1.2rem 3rem 2rem 3rem;
+    border-radius: 2rem;
+    box-shadow: 0 0 2rem -0.1rem rgba(69, 173, 65, 0.24);
+    position: relative;
+    background-color: $white;
+    h3 {
+      color: $primary-color;
+      font-size: 3rem;
+      letter-spacing: 0;
+      line-height: 4rem;
+      font-weight: 300;
+      margin: 0;
+    }
+  }
+}
+
+.bubble {
+  &:first-child {
+    &::after {
+      background-repeat: no-repeat;
+      width: 25rem;
+      height: 23rem;
+      background-image: url(/assets/images/enquiry-top-left.png);
+      position: absolute;
+      content: '';
+      left: -17%;
+      top: 20%;
+      background-size: contain;
+      z-index: -1;
+    }
+  }
+}

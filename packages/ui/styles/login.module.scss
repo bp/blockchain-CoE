@@ -1,0 +1,133 @@
+@import './variables.scss';
+.modalHeader {
+  padding: 0.2rem 1.6rem;
+  background-color: white;
+  color: white;
+}
+
+.modalContent {
+  display: flex;
+  box-sizing: border-box;
+  width: 50rem;
+  border: 0.1rem solid rgba(0, 167, 10, 0.15);
+  border-radius: 1.9rem;
+  background-color: #ffffff;
+  box-shadow: 0 0 2rem -0.1rem rgba(69, 173, 65, 0.24);
+  -webkit-animation-name: animatetop;
+  -webkit-animation-duration: 0.4s;
+  animation-name: animatetop;
+  animation-duration: 0.4s;
+}
+
+.modal {
+  position: fixed;
+  z-index: 40;
+  left: 0;
+  top: 0;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.modalBody {
+  padding: 0px 0px;
+  font-size: 1.6rem;
+  display: flex;
+}
+
+.wallets {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  padding: 3rem;
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    .head {
+      display: flex;
+      color: #343434;
+      font-size: 2.8rem;
+      letter-spacing: 0;
+      font-weight: 400;
+      text-align: left;
+      // line-height: 4rem;
+      // margin-bottom: 2rem;
+    }
+
+    .icon {
+      cursor: pointer;
+      font-size: 3rem;
+      font-weight: 200;
+      padding: 0 1rem 0 1rem;
+      margin-top: -0.5rem;
+    }
+  }
+
+  article {
+    color: $black;
+    font-weight: normal;
+    font-size: 1.6rem;
+    letter-spacing: 0;
+    line-height: 2.1rem;
+    margin-bottom: 1rem;
+    margin-top: 2rem;
+  }
+
+  figure {
+    position: inherit;
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+
+  figcaption {
+    font-size: 1.8rem;
+    line-height: 2rem;
+    text-align: center;
+    margin-bottom: 3.2rem;
+  }
+
+  .btn {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+.signInBtn {
+  width: 10rem;
+}
+
+/* Add Animation */
+@-webkit-keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@keyframes animatetop {
+  from {
+    top: -300px;
+    opacity: 0;
+  }
+  to {
+    top: 0;
+    opacity: 1;
+  }
+}
+
+@media (max-width: 500px) {
+  .modalContent {
+    width: 36rem;
+  }
+}

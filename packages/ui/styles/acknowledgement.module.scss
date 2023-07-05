@@ -1,0 +1,65 @@
+@import './variables.scss';
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.outerSection {
+  animation: fadeIn 1s;
+  .innerSection {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 85rem;
+
+    .imgContainer {
+      height: 45.6rem;
+      width: 50rem;
+      align-self: center;
+    }
+
+    .title {
+      margin-top: 3rem;
+      color: $primary-color;
+      font-size: 3rem;
+      line-height: 4rem;
+      align-self: center;
+    }
+
+    .content {
+      color: $primary-text-color;
+      font-size: 1.6rem;
+      line-height: 2rem;
+      align-self: center;
+      margin-top: 0.8rem;
+    }
+
+    .button {
+      align-self: center;
+      margin-top: 3.5rem;
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .outerSection {
+    .innerSection {
+      justify-content: space-between;
+      width: calc((100% - 2rem) / 1);
+      margin-bottom: 2rem;
+      &:nth-child(3n + 2) {
+        margin: 0;
+      }
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .outerSection {
+    .innerSection {
+      width: 100%;
+    }
+  }
+}

@@ -1,0 +1,186 @@
+@import './variables.scss';
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.adminPage {
+  min-height: 70vh;
+  margin-top: 4rem;
+  animation: fadeIn 1s;
+  // margin: auto;
+  .contentOuter {
+    margin-top: 6rem;
+    .contentSection {
+      margin-bottom: 2rem;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+
+      .contentBox {
+        width: calc(95% / 2);
+        border-radius: 1.9rem;
+        background-color: $white;
+        box-shadow: 0 0 20px -1px $greenshadow;
+        padding: 5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        
+
+        h3 {
+          color: $light-black;
+          font-size: 4rem;
+          font-weight: 400;
+          letter-spacing: 0;
+          line-height: 6.8rem;
+          margin: 0 0 1.5rem 0;
+        }
+
+        p {
+          color: $primary-text-color;
+          font-size: 1.5rem;
+          letter-spacing: 0;
+          line-height: 2.2rem;
+          margin-bottom: 2rem;
+
+          span {
+            color: $red;
+          }
+
+          &:nth-of-type(2) {
+            margin-top: 3rem;
+          }
+        }
+
+        button {
+          bottom: 25px;
+          margin: 0rem;
+          min-width: 20rem;
+          align-self: center;
+        }
+
+        &:nth-of-type(2) {
+          h3 {
+            margin: 0;
+          }
+        }
+
+        .homeBtn{
+          display: flex;
+          justify-content: center;
+          padding-top: 4rem;
+        }
+      }
+    }
+  }
+  .projectsContainer {
+    position: relative;
+    margin: 1.8rem 0 3rem 0;
+
+    &::before{
+      content: '';
+      background-image: url('/assets/images/admin-listing-top-left.png');
+      height: 28rem;
+      width: 33rem;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-size: contain;
+      left: -11rem;
+      top: 19rem;
+      z-index: -1;
+    }
+    &::after{
+      content: '';
+      background-image: url('/assets/images/admin-listing-bottom-right.png');
+      height: 28rem;
+      width: 33rem;
+      position: absolute;
+      background-repeat: no-repeat;
+      background-size: contain;
+      right: -14rem;
+      bottom: 19rem;  
+      z-index: -1;
+    }
+    .cardContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      border-radius: 1.9rem;
+      background-color: $white;
+      box-shadow: 0 0 20px -1px rgba(69, 173, 65, 0.24);
+      margin-bottom: 2rem;
+
+      .cardContents {
+        padding: 1.9rem 8.1rem 3.8rem 5.9rem;
+        height: 25rem;
+        .title {
+          font-size: 2rem;
+          font-weight: bold;
+          letter-spacing: 0;
+          line-height: 40px;
+        }
+
+        .contents {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          padding: 3rem 0;
+          .item{
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            padding-bottom: 3rem;
+            
+            .head{
+              font-size: 1.6rem;
+              letter-spacing: 0;
+              line-height: 1.9rem;
+              width: 10rem;
+              padding-bottom: 1.6rem;
+            }
+            .value{
+              font-size: 1.6rem;
+              font-weight: 600;
+              letter-spacing: 0;
+              line-height: 1.9rem;
+            }
+          }
+        }
+      }
+    }
+  }
+  .verifyDistributionBtn{
+    min-width: 27rem;
+  }
+  .stopContractBtn{
+    min-width: 20rem;
+  }
+}
+
+@media (max-width: 767px) {
+  .adminPage {
+    .contentOuter {
+      .contentSection {
+        flex-direction: column;
+        .contentBox {
+          width: 100%;
+          margin-bottom: 3rem;
+        }
+      }
+    }
+    .projectsContainer{
+      .cardContainer{
+        display: flex;
+        flex-direction: column;
+        .cardContents{
+          width: 100%;
+          margin-bottom: 3rem;
+          flex-direction: column;
+        }
+      }
+    }
+  }
+}

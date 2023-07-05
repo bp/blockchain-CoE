@@ -1,0 +1,94 @@
+@import './variables.scss';
+
+.contactformSection {
+  margin-bottom: 217px;
+  .contactformComponent {
+    position: relative;
+
+    .contactformComponentDummy {
+      width: 100%;
+      height: 100%;
+      border-radius: 19px;
+      background-color: #ffffff;
+      box-shadow: 0 0 20px -1px rgba(69, 173, 65, 0.24);
+      position: relative;
+      display: flex;
+      justify-content: center;
+
+      .contactForm{
+        max-width: 300px;
+        margin-top: 111px;
+        margin-bottom: 127px;
+        width: 90%;
+        .inputGroup{
+          margin-bottom: 16px;
+          label{
+            width:100%;
+            font-size: 14px;
+            line-height: 18px;
+          }
+          input{
+            width:100%;
+            border:1px solid #DDDDDD;
+            border-radius: 4px;
+            height: 40px;
+          }
+        }
+
+        .buttonContainer{
+          display: flex;
+          justify-content: center;
+        }
+
+      }
+
+
+      &::before {
+        content: '';
+        background-image: url('/assets/images/contactform-left-top-img.png');
+        width: 270px;
+        height: 280px;
+        position: absolute;
+        z-index: -1;
+        left: -150px;
+        top: -150px;
+        background-repeat: no-repeat;
+      }
+  
+      &::after{
+        content: '';
+        background-image: url('/assets/images/contactform-right-top-img.png');
+        top: -140px;
+        right: -100px;
+        width:166px;
+        height: 200px;
+        position: absolute;
+        background-repeat: no-repeat;
+      }
+    }
+
+    &::before {
+      content: '';
+      background-image: url('/assets/images/contactform-left-bottom-img.png');
+      width: 120px;
+      height: 175px;
+      position: absolute;
+      z-index: -1;
+      left: -120px;
+      bottom: 0px;
+      background-repeat: no-repeat;
+    }
+
+    &::after{
+      content: "";
+      background-image: url(/assets/images/contactform-right-bottom-img.png);
+      bottom: 50px;
+      right: -105px;
+      width: 146px;
+      height: 315px;
+      position: absolute;
+      z-index: -1;
+      background-repeat: no-repeat;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="176px" height="150px" viewBox="0 0 176 150" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Path</title>
+    <defs>
+        <linearGradient x1="0%" y1="99.5588348%" x2="100%" y2="0.441165167%" id="linearGradient-1">
+            <stop stop-color="#00A70A" offset="0%"></stop>
+            <stop stop-color="#00C200" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Climate-DAO-Wireframes" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <path d="M143.855564,26.7527574 C160.50389,42.4315434 174.902442,61.2460865 175.802351,80.9565603 C176.477284,100.443051 163.653573,120.825473 147.005247,132.696554 C130.356921,144.567635 109.88398,147.703392 87.8361968,149.271271 C65.7884139,150.839149 41.9408119,150.839149 24.8425312,139.192051 C7.7442505,127.32097 -3.05466361,103.578809 0.769951802,83.6443522 C4.36958984,63.7098957 22.36778,47.3591618 39.4660607,31.9043585 C56.5643414,16.2255726 72.9876899,1.44271723 90.7609027,0.0988212896 C108.309138,-1.24507465 127.207238,11.2979541 143.855564,26.7527574 Z" id="Path" fill="url(#linearGradient-1)" fill-rule="nonzero"></path>
+    </g>
+</svg>

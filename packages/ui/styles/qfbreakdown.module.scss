@@ -1,0 +1,45 @@
+@import './variables.scss';
+
+.qfBreakdownSection {
+  .warning {
+    color: #d90101;
+    font-family: Roboto;
+    font-size: 12px;
+    letter-spacing: 0;
+    line-height: 22px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    table-layout: fixed;
+    thead {
+      tr {
+        th {
+          color: $light-black;
+          font-size: 1.6rem;
+          letter-spacing: 0;
+          line-height: 2rem;
+          text-align: left;
+          font-weight: 500;
+          padding: 2rem 4.5rem;
+        }
+      }
+    }
+    tbody {
+      tr {
+        td {
+          border-bottom: 1px solid #bbf3bf;
+          color: $light-black;
+          font-size: 1.6rem;
+          letter-spacing: 0;
+          line-height: 2rem;
+          text-align: left;
+          height: 6rem;
+          font-weight: 300;
+          padding-left: 4.5rem
+        }
+      }
+    }
+  }
+}

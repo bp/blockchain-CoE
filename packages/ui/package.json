@@ -1,0 +1,33 @@
+{
+  "name": "@eyblockchain/climatedao-ui",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "pretest": "npm run dev",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hapi/iron": "6.0.0",
+    "axios": "0.21.1",
+    "ethers": "5.4.6",
+    "next": "11.1.0",
+    "prop-types": "15.7.2",
+    "randombytes": "2.1.0",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "react-slick": "0.28.1",
+    "sharp": "0.29.3",
+    "slick-carousel": "1.8.1",
+    "swr": "0.5.6",
+    "web3": "1.5.2"
+  },
+  "devDependencies": {
+    "eslint": "7.32.0",
+    "eslint-config-next": "11.1.0",
+    "postcss": "8.3.6",
+    "sass": "1.38.2"
+  }
+}

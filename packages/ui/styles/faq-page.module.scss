@@ -1,0 +1,56 @@
+@import './variables.scss';
+
+.faqSection {
+  .heading {
+    color: $primary-color;
+    font-size: 3rem;
+    letter-spacing: 0;
+    line-height: 4rem;
+    font-weight: 400;
+    margin: 0;
+    margin-top: 3rem;
+  }
+  .faqs {
+    margin: 12rem auto;
+    margin-top: 0rem;
+    max-width: 100rem;
+    position: relative;
+    &::before{
+      background-repeat: no-repeat;
+      width: 16rem;
+      height: 17.5rem;
+      background-image: url(/assets/images/enquiry-bottom-left.svg);
+      position: absolute;
+      content: "";
+      right: -15%;
+      top: 0rem;
+      background-size: contain;
+    }
+
+    &::after{
+      background-repeat: no-repeat;
+      width: 28rem;
+      height: 26rem;
+      background-image: url(/assets/images/projectdetails1.svg);
+      position: absolute;
+      content: "";
+      right: -15%;
+      bottom: -9.5rem;
+      background-size: contain;
+      z-index: -1;
+    }
+  }
+}
+
+@media (max-width: 1350px) {
+  .faqSection {
+    .faqs {
+      &::before{
+        right: -3%;
+      }
+      &::after{
+        right: -3%;
+      }
+    }
+  }
+}

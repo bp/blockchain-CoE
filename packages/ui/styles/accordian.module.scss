@@ -1,0 +1,35 @@
+@import './variables.scss';
+.accordionItem {
+  border-bottom: 1px solid $primary-color;
+  color: rgba(17, 17, 17, 0.8);
+  font-size: 1.6rem;
+  letter-spacing: 0;
+  line-height: 2rem;
+  .accordionTitle {
+    display: flex;
+    padding: 3rem 0rem 2rem 0rem;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+
+    .icon {
+      color: $primary-color;
+      background-image: url(/assets/images/FAQ-Arrow.svg);
+      width: 18px;
+      height: 10px;
+      background-repeat: no-repeat;
+
+      &.open{
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  .accordionContent {
+    padding-bottom: 1.8rem;
+    line-height: 2.5rem;
+  }
+  &:last-of-type {
+    border: none;
+  }
+}

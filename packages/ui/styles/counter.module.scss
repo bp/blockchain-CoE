@@ -1,0 +1,39 @@
+@import './variables.scss';
+$tablet: 768px;
+section.counterSection{
+  padding: 2rem;
+  .counterDetails {
+    display: flex;
+    background: $light-green;
+    border-radius: 0.8rem;
+    margin-bottom: 6rem;
+    justify-content: space-around;
+    .counterDetailsItem {
+      flex-basis: 33.33%;
+      //padding-left: 30px;
+      padding: 3.5rem 0px 4rem 0px;
+      .counter {
+        font-size: 2.4rem;
+        line-height: 3.2rem;
+        font-weight: 300;
+        text-align: center;
+        span{
+          font-size: 1.6rem;
+          line-height: 2rem;
+        }
+      }
+      .description {
+        font-size: 1.6rem;
+        line-height: 2rem;
+        font-weight: 300;
+        text-align: center;
+      }
+    }
+  
+    @media screen and (max-width: $tablet) {
+      &.counterDetails{
+        display: block;
+      }
+    }
+  }
+}

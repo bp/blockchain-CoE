@@ -1,0 +1,68 @@
+@import './variables.scss';
+
+.footer {
+  float: left;
+  background-color: $primary-text-color;
+  width: 100%;
+  .footerContainer {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+    display: flex;
+    justify-content: space-between;
+    color: #ffffff;
+    font-size: 1.2rem;
+    line-height: 1.6rem;
+    flex-wrap: wrap;
+
+    .leftPane {
+      .climateTitle {
+        margin-bottom: 0.7rem;
+      }
+
+      .powered {
+        margin-bottom: 3.5rem;
+        display: flex;
+        align-items: center;
+        .icon {
+          margin-left: 0.5rem;
+          background-image: url('/assets/images/start-icon.png');
+          width:27px;
+          height: 27px;
+        }
+      }
+
+      .copyright {
+        margin-bottom: 0.75rem;
+      }
+    }
+
+    .rightPane {
+      text-align: right;
+      .privacy {
+        margin-bottom: 3.5rem;
+        line-height: 2.5rem;
+        a {
+          text-decoration: underline;
+          &:first-of-type {
+            margin-bottom: 0.7rem;
+          }
+        }
+      }
+
+      .address {
+        line-height: 1.8rem;
+      }
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .footer {
+    .footerContainer{
+      .rightPane{
+        text-align: left;
+      }
+    }
+    
+  }
+}
