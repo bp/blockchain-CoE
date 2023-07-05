@@ -1,0 +1,133 @@
+name: Release Workflow
+on:
+  push:
+      branches:
+        - master
+      paths:
+        - 'packages/ui/**'
+        - 'packages/api/**'
+        - 'packages/zokrates-worker/**'
+        - 'packages/event-listener/**'
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout action
+        uses: actions/checkout@v1
+
+      - name: Set Variables
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+
+      - uses: dorny/paths-filter@v2
+        id: should_re_deploy
+        with:
+          base: ${{ steps.vars.outputs.short_ref }}
+          filters: |
+            api:
+              - 'packages/api/**'
+            ui:
+              - 'packages/ui/**'
+            zokratesworker:
+              - 'packages/zokrates-worker/**'
+            eventlistener:
+              - 'packages/event-listener/**'
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: validate before release
+        run: |
+          npm ci --no-save
+          npm run lint
+        env:
+          SKIP_PREFLIGHT_CHECK: true
+          CI: true
+
+      - name: Update permission for action
+        run: sudo chown -R $USER:$USER ${{ github.workspace }}
+
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.GHCR_REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push api
+        if: |
+          steps.should_re_deploy.outputs.api == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./prod.api.Dockerfile
+          tags: |
+            ${{ secrets.GHCR_REGISTRY }}/eyblockchain/climate-dao-api:latest
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          push: true
+      
+      - name: Build and push ui
+        if: |
+          steps.should_re_deploy.outputs.ui == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./prod.ui.Dockerfile
+          tags: |
+            ${{ secrets.GHCR_REGISTRY }}/eyblockchain/climate-dao-ui:latest
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          push: true
+
+      - name: Build and push zokrates worker
+        if: |
+          steps.should_re_deploy.outputs.zokratesworker == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./prod.zokrates.Dockerfile
+          tags: |
+            ${{ secrets.GHCR_REGISTRY }}/eyblockchain/climate-dao-zokrates-worker:latest
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          push: true
+
+      - name: Build and push event listener
+        if: |
+          steps.should_re_deploy.outputs.eventlistener == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./prod.listener.Dockerfile
+          tags: |
+            ${{ secrets.GHCR_REGISTRY }}/eyblockchain/climate-dao-event-listener:latest
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+          push: true
+
+      # - name: aks connection
+      #   uses: azure/k8s-set-context@v1
+      #   with:
+      #     method: kubeconfig
+      #     kubeconfig: ${{ secrets.AZURE_KUBECONFIG }}
+      #   id: setcontext
+
+      # - name: deploy ui to cluster
+      #   if: steps.should_re_deploy.outputs.ui == 'true'
+      #   uses: Azure/k8s-deploy@v1
+      #   with:
+      #     namespace: climatedao
+      #     manifests: manifests/dev-ui/deployment.yml
+      #     images: ${{ secrets.GHCR_REGISTRY }}/eyblockchain/climate-dao-ui:latest
+
+      # - name: deploy api to cluster
+      #   if: steps.should_re_deploy.outputs.api == 'true'
+      #   uses: Azure/k8s-deploy@v1
+      #   with:
+      #     namespace: climatedao
+      #     manifests: manifests/dev-api/deployment.yml
+      #     images: ${{ secrets.GHCR_REGISTRY }}/eyblockchain/climate-dao-api:latest

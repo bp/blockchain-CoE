@@ -1,0 +1,56 @@
+name: Validate Workflow
+on:
+  push:
+      branches-ignore:
+       - master
+
+      paths:
+        - 'packages/ui/**'
+        - 'packages/api/**'
+        - 'packages/zokrates-worker/**'
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout action
+        uses: actions/checkout@v2
+      - name: Set Variables
+        id: vars
+        run: echo ::set-output name=short_ref::${GITHUB_REF#refs/*/}
+      - uses: dorny/paths-filter@v2
+        id: should_re_deploy
+        with:
+          base: ${{ steps.vars.outputs.short_ref }}
+          filters: |
+            api:
+              - 'packages/api/**'
+            ui:
+              - 'packages/ui/**'
+            zokratesworker:
+              - 'packages/zokrates-worker/**'
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+
+      - name: validate and lint
+        run: |
+          npm ci --no-save
+          npm run lint
+        env:
+          SKIP_PREFLIGHT_CHECK: true
+          CI: true
+
+      - name: Build ui
+        if: steps.should_re_deploy.outputs.ui == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./prod.ui.Dockerfile
+
+      - name: Build api
+        if: steps.should_re_deploy.outputs.api == 'true'
+        uses: docker/build-push-action@v2
+        with:
+          context: ./
+          file: ./prod.api.Dockerfile
