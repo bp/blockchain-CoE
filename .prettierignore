@@ -1,0 +1,9 @@
+node_modules
+build
+dist
+packages/ui/node_modules
+packages/api/node_modules
+packages/zokrates-worker/node_modules
+packages/api/build
+packages/ui/build
+packages/zokrates-worker/build

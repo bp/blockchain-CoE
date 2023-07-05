@@ -1,0 +1,630 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Climate-DAO",
+		"_postman_id": "6d1b2a5f-2742-9b6a-635d-2f27c99ad928",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"description": "Providing Authentication for the Users to Login to the application",
+			"item": [
+				{
+					"name": "Authenticate",
+					"request": {
+						"url": "http://localhost:8000/sapi/login",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\":\"0x425A6672141f40dAD332FdE1195DE3556D1aE7DA\",\n\t\"signature\":\"0x4a6bc418796e8b853f06be696305cb57dfaee21362cfa5ff9fb944ff002747826b69e1b04045e3cea8cfe9f886c10f7fabcf65f75e30025a419552f91ee6de921b\"\n}"
+						},
+						"description": "This endpoint allows to authenticate the user based on signer and signature using Metamask wallet."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Notification",
+			"description": "Provides Project Updates for the Subscribed users",
+			"item": [
+				{
+					"name": "Subscribe for Notification",
+					"request": {
+						"url": "http://localhost:8000/sapi/notification",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"email\":\"testUser@testmail.com\"\n}"
+						},
+						"description": "This endpoint allows users to subscribe for any updates"
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch All Subscribed Users",
+					"request": {
+						"url": "http://localhost:8000/sapi/notification",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint provides the detail of all Users(email Ids) subscribed for notifications. This activity can be performed only by the admin(s)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contribution",
+			"description": "Users can make contributions for the projects",
+			"item": [
+				{
+					"name": "Contribute to a Project with Bp Pays Txn Fee",
+					"request": {
+						"url": "http://localhost:8000/sapi/contribution",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"signature\":\"0x1e999489a099ca71eff64ec76c28d12e18cbad654f177777a6dc206c25e6085d716aa0971d20986692ed33659ec838264b37a21df7d3dfa1e38b97b5e4b63d3f1c\",\n\t\"votes\":[\n\t\t{\n\t\t\t\"id\":\"1\",\n\t\t\t\"amount\":100\n\t\t},\n\t\t{\n\t\t\t\"id\":\"2\",\n\t\t\t\"amount\":200\n\t\t},\n\t\t{\n\t\t\t\"id\":\"3\",\n\t\t\t\"amount\":0\n\t\t},\n\t\t{\n\t\t\t\"id\":\"4\",\n\t\t\t\"amount\":0\n\t\t},\n\t\t{\n\t\t\t\"id\":\"5\",\n\t\t\t\"amount\":0\n\t\t}\n\t],\n\t\"contribution\":300,\n\t\"data\":{\n\t\t\"from\":\"0x710CE9D5E9daaE95028E2A5c6eAB332C3283802F\",\n\t\t\"to\":\"0x1130b5f11293d37b1bBa79DcfbC341c8963D55F6\",\n\t\t\"value\":300,\n\t\t\"validAfter\":0,\n\t\t\"validBefore\":1931525157,\n\t\t\"nonce\":\"0xd52b61a1ecb0690fee8003883172f1c193c660356cf2aee5391dcc642460e5d2\"\n\t},\n\t\"domain\":{\n\t\t\"name\":\"USD Coin\",\n\t\t\"version\":\"2\",\n\t\t\"chainId\":3,\n\t\t\"verifyingContract\":\"0x07865c6E87B9F70255377e024ace6630C1Eaa37F\"\n\t}\n}"
+						},
+						"description": "This endpoint allows the user to contribute to any of the selected projects, only during the active voting period. Only one contribution is allowed per user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Contributed",
+					"request": {
+						"url": "http://localhost:8000/sapi/contribution",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint fetches all the contributions which user has made upon the projects"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Transaction",
+					"request": {
+						"url": "http://localhost:8000/sapi/contribution/verify",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"relayTransactionHash\":\"0x280a91bee62f20d4e6e9e7facf9a75084b22a274e200658556b3ee78c01e5ce8\"\n}"
+						},
+						"description": "This endpoint verifies whether the transaction is processed in the provided network and updates the local db based upon the status"
+					},
+					"response": []
+				},
+				{
+					"name": "Contribute to a Project with User Paying Txn Fee",
+					"request": {
+						"url": "http://localhost:8000/sapi/contribution/draft",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"signature\":\"0x1e999489a099ca71eff64ec76c28d12e18cbad654f177777a6dc206c25e6085d716aa0971d20986692ed33659ec838264b37a21df7d3dfa1e38b97b5e4b63d3f1c\",\n  \"votes\":[\n    {\n      \"id\":\"1\",\n      \"amount\":100\n    },\n    {\n      \"id\":\"2\",\n      \"amount\":200\n    },\n    {\n      \"id\":\"3\",\n      \"amount\":0\n    },\n    {\n      \"id\":\"4\",\n      \"amount\":0\n    },\n    {\n      \"id\":\"5\",\n      \"amount\":0\n    }\n  ],\n  \"contribution\":300,\n  \"data\":{\n    \"from\":\"0x710CE9D5E9daaE95028E2A5c6eAB332C3283802F\",\n    \"to\":\"0x1130b5f11293d37b1bBa79DcfbC341c8963D55F6\",\n    \"value\":300,\n    \"validAfter\":0,\n    \"validBefore\":1931525157,\n    \"nonce\":\"0xd52b61a1ecb0690fee8003883172f1c193c660356cf2aee5391dcc642460e5d2\"\n  },\n  \"domain\":{\n    \"name\":\"USD Coin\",\n    \"version\":\"2\",\n    \"chainId\":3,\n    \"verifyingContract\":\"0x07865c6E87B9F70255377e024ace6630C1Eaa37F\"\n  }\n}"
+						},
+						"description": "This endpoint is used, when user is willing to pay transaction fee for the contribution they make."
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Successful Contributions",
+					"request": {
+						"url": "http://localhost:8000/sapi/contribution/succeeded",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint fetches all the successful contributions"
+					},
+					"response": []
+				},
+				{
+					"name": "Verify User Contribution",
+					"request": {
+						"url": "http://localhost:8000/sapi/contribution/verifyContribution",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This route helps to cross verify whether the total number of successful contributions in the db matches with that of the contract. This activity can be performed only after the voting process ends and can be performed only by the admin(s)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"description": "",
+			"item": [
+				{
+					"name": "Fetch Session Object",
+					"request": {
+						"url": "http://localhost:8000/sapi/user/session",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint allows to check whether the user is logged in and returns error if not."
+					},
+					"response": []
+				},
+				{
+					"name": "Add New User",
+					"request": {
+						"url": "http://localhost:8000/sapi/user",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"address\":\"0x710CE9D5E9daaE95028E2A5c6eAB332C3283802F\"\n}"
+						},
+						"description": "This endpoint allows new user to register to the application"
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"url": "http://localhost:8000/sapi/user/6170f5682f44ae020a20fb54",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \n\t\"role\": \"admin\" \n}"
+						},
+						"description": "This endpoint updates user detail.This route is intended for jest testing purpose only."
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch User Details by Address",
+					"request": {
+						"url": {
+							"raw": "http://localhost:8000/sapi/user/address?address=0x710CE9D5E9daaE95028E2A5c6eAB332C3283802F",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"sapi",
+								"user",
+								"address"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "0x710CE9D5E9daaE95028E2A5c6eAB332C3283802F",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint can be used to fetch user by address. This provides data for user onboarding to the application."
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch User Data",
+					"request": {
+						"url": "http://localhost:8000/sapi/user/",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint helps to fetch user details by using Id from the session"
+					},
+					"response": []
+				},
+				{
+					"name": "Mark KYC Read",
+					"request": {
+						"url": "http://localhost:8000/sapi/user/mark-kyc-read",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "This endpoint allows to manage KYC response, which update the kyc status of the user to mark as read."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Projects",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Available Projects",
+					"request": {
+						"url": "http://localhost:8000/sapi/projects",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint allows to fetch all the available projects in the aplication"
+					},
+					"response": []
+				},
+				{
+					"name": "Get Project Details",
+					"request": {
+						"url": "http://localhost:8000/sapi/projects/1",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint provides the details for the given project Id"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Basket",
+			"description": "Provides data to show the projects in Users Basket page in application",
+			"item": [
+				{
+					"name": "Set basket data in Cache",
+					"request": {
+						"url": "http://localhost:8000/sapi/basket/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"1\":\"1333\",\n\t\"2\":\"\",\n\t\"3\":\"\",\n\t\"4\":\"\",\n\t\"5\":\"\"\n}"
+						},
+						"description": "This endpoint sets the selected projects of the user in basket page of the application to redis cache"
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch data from Cache",
+					"request": {
+						"url": "http://localhost:8000/sapi/basket/",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint allows to fetch the projects which users have wished for contribution from redis-cache to display in the basket page of the application"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Contract",
+			"description": "",
+			"item": [
+				{
+					"name": "Get Climate DAO-Contract Details",
+					"request": {
+						"url": "http://localhost:8000/sapi/contract",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint returns the Climate DAO contract details(start and endtime) and also returns the state of the contract(active/cancelled)"
+					},
+					"response": []
+				},
+				{
+					"name": "Cancel Climate DAO Contract",
+					"request": {
+						"url": "http://localhost:8000/sapi/contract/cancel",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "This endpoint can be used to stop an active Climate DAO contract.This activity can be performed only by the admin(s)."
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch USDC Balance",
+					"request": {
+						"url": {
+							"raw": "http://localhost:8000/sapi/contract/usdcBalance?address=0x966586f2062F881C9bbAc2Fef385E3e4123175B8",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8000",
+							"path": [
+								"sapi",
+								"contract",
+								"usdcBalance"
+							],
+							"query": [
+								{
+									"key": "address",
+									"value": "0x966586f2062F881C9bbAc2Fef385E3e4123175B8",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint returns the USDC balance for the provided user address"
+					},
+					"response": []
+				},
+				{
+					"name": "Clear Cache once Contract is Cancelled",
+					"request": {
+						"url": "http://localhost:8000/sapi/contract/verifyCancel",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"cancelTransactionHash\":\"0xf895854306434a0da65c65a3832228f9d238acef0710919e6b5f105b8e24c784\"\n}"
+						},
+						"description": "This endpoint helps to clear the redis cache once an active contract is stopped. This activity can be performed only by the admin(s)."
+					},
+					"response": []
+				},
+				{
+					"name": "Deploy Contract",
+					"request": {
+						"url": "http://localhost:8000/sapi/contract/",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "This endpoint can be used to deploy contract to ropsten network.This endpoint is intended for jest test purpose only"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Distribute Funds",
+			"description": "Admin Functionality to distribute funds to the Projects based upon Quadratic Funding",
+			"item": [
+				{
+					"name": "Distribute Funds",
+					"request": {
+						"url": "http://localhost:8000/sapi/distributeFunds",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "This endpoint is used to distribute funds to the projects. This activity can be performed only by the admin(s)."
+					},
+					"response": []
+				},
+				{
+					"name": "Verify Transaction",
+					"request": {
+						"url": "http://localhost:8000/sapi/distributeFunds/verify",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"distributionTransactionHash\":\"0x280a91bee62f20d4e6e9e7facf9a75084b22a274e200658556b3ee78c01e5ce8\"\n}"
+						},
+						"description": "Route verifies whether the transaction is processed in the provided network and updates the local db. This activity can be performed only by admin(s)."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "ITX",
+			"description": "Details Regarding ITX account",
+			"item": [
+				{
+					"name": "Fetch ITX Balance",
+					"request": {
+						"url": "http://localhost:8000/sapi/itx/balance",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint returns the balance of the configured itx account"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "KYC",
+			"description": "Takes care of the KYC Details of the user",
+			"item": [
+				{
+					"name": "Update KYC For a User",
+					"request": {
+						"url": "http://localhost:8000/sapi/kyc",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"jwtresponse\":\"\"\n}"
+						},
+						"description": "This endoint helps to update the kyc details for a user"
+					},
+					"response": []
+				},
+				{
+					"name": "Update Existing Application",
+					"request": {
+						"url": "http://localhost:8000/sapi/kyc/callback",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"tid\":\"\",\n\t\"state\":\"\"\n}"
+						},
+						"description": "This endpoint helps to update the kyc status of an existing kyc application"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Proof",
+			"description": "Proof Generation - Admin Functionality. \nActivity can be performed once the voting process is ended.",
+			"item": [
+				{
+					"name": "Generate Proof",
+					"request": {
+						"url": "http://localhost:8000/sapi/proof/generate",
+						"method": "POST",
+						"header": [],
+						"body": {},
+						"description": "This endpoint is used to generate new proof. This activity can be performed only by the admin(s)."
+					},
+					"response": []
+				},
+				{
+					"name": "Fetch Generated Proof",
+					"request": {
+						"url": "http://localhost:8000/sapi/proof/generate",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": "This endpoint helps to check whether the proof is generated. This activity can be performed only by the admin(s) and can be performed once the voting process is ended."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Quadratic Funding",
+			"description": "Splits the matching pool and return the quadratic breakdown for each of the projects.\nAdmin Functionality.",
+			"item": [
+				{
+					"name": "Get QF Breakdown",
+					"request": {
+						"url": "http://localhost:8000/sapi/quadraticFunding",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": "This endpoint facilitates to split the matching pool and return the quadratic breakdown for each of the projects.\nThis activity can be performed only by the admin(s)."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

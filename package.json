@@ -1,0 +1,49 @@
+{
+  "name": "climatedao",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "lerna run start",
+    "test": "lerna run test",
+    "lint": "eslint --fix .",
+    "clean": "lerna clean -y",
+    "bootstrap": "lerna bootstrap --hoist",
+    "format": "prettier --write './**/*.{js,jsx,ts,tsx,css,md,json}' --config ./.prettierrc"
+  },
+  "dependencies": {
+    "axios": "0.21.4",
+    "eslint-config-prettier": "8.3.0",
+    "eslint-plugin-jsx-a11y": "6.4.1",
+    "eslint-plugin-prettier": "3.4.1",
+    "eslint-plugin-react-hooks": "4.2.0",
+    "ethers": "5.4.7",
+    "prettier": "2.3.2",
+    "randombytes": "2.1.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.14.8",
+    "@babel/core": "7.15.0",
+    "@babel/preset-env": "7.15.0",
+    "@commitlint/cli": "13.1.0",
+    "@commitlint/config-conventional": "13.1.0",
+    "@truffle/hdwallet-provider": "1.5.0",
+    "big-integer": "1.6.51",
+    "dotenv": "10.0.0",
+    "eslint": "7.32.0",
+    "eslint-config-standard": "16.0.3",
+    "eslint-plugin-import": "2.24.1",
+    "eslint-plugin-node": "11.1.0",
+    "eslint-plugin-promise": "5.1.0",
+    "eslint-plugin-react": "7.24.0",
+    "husky": "7.0.1",
+    "keccak": "3.0.0",
+    "lerna": "4.0.0",
+    "nodemon": "2.0.12",
+    "semantic-release": "17.4.7",
+    "docker-compose": "0.23.14",
+    "js-yaml": "4.1.0",
+    "path": "0.12.7"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}

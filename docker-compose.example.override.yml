@@ -1,0 +1,24 @@
+version: '3.7'
+
+services:
+  ui:
+    environment: 
+      USDC_CONTRACT: ''
+      CLIMATE_DAO_CONTRACT: ''
+      NODE_ENV: 'development'
+  api:
+    environment: 
+      USDC_CONTRACT: ''
+      CLIMATE_DAO_CONTRACT: ''
+      JSON_RPC: ''
+      INFURA_PROJECTID: ''
+      ADMIN_ADDRESS: ''
+      ADMIN_PRIVATE_KEY: ''
+      ITX_PRIVATE_KEY: ''
+      ITX_ADDRESS: ''
+      NODE_ENV: 'development'
+  event-listener:
+    environment: 
+      CLIMATE_DAO_CONTRACT: ''
+      JSON_RPC_WS: ''
+      INFURA_PROJECTID: ''

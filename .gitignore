@@ -1,0 +1,51 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+packages/ui/node_modules
+packages/api/node_modules
+packages/zokrates-worker/node_modules
+packages/event-listener/node_modules
+/.pnp
+.pnp.js
+docker-compose.override.yml
+secrets.yml
+configmap.yml
+manifests/dev/configmap.yml
+# testing
+/coverage
+/e2e-testing/cypress/screenshots/
+proving-files/*
+# production
+/build
+proving-files-dev/*
+proving-files-prod/*
+
+packages/api/build
+# packages/api/artifacts
+packages/ui/build
+packages/zokrates-worker/build
+packages/event-listener/artifacts
+packages/api/artifacts
+packages/event-listener/build
+packages/api/.env
+.env
+.dev.env
+packages/ui/artifacts
+
+# circuits
+circuits/*.key
+circuits/out
+circuits/witness
+circuits/proof.json
+
+# misc
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*

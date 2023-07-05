@@ -1,0 +1,180 @@
+version: '3.7'
+
+services:
+  ui:
+    build:
+      context: ./
+      dockerfile: local.ui.Dockerfile
+    command: ['npm', 'run', 'dev']
+    ports:
+      - '3000:3000'
+    restart: on-failure
+    depends_on:
+      - api
+    environment:
+      TOKEN_SECRET: this-is-a-secret-value-with-at-least-32-characters
+      VIRTUAL_HOST: climatedao.docker
+      NODE_ENV: ''
+      USDC_CONTRACT: ''
+      CLIMATE_DAO_CONTRACT: ''
+      APPLICATION_URL: 'http://localhost:3000'
+    volumes:
+      - ./packages/ui/components:/app/components
+      - ./packages/ui/layouts:/app/layouts
+      - ./packages/ui/pages:/app/pages
+      - ./packages/ui/public:/app/public
+      - ./packages/ui/styles:/app/styles
+      - ./packages/ui/contexts:/app/contexts
+      - ./packages/ui/lib:/app/lib
+      - ./packages/ui/next.config.js:/app/next.config.js
+      - ./packages/ui/.env:/app/.env
+      - ./artifacts:/app/artifacts
+
+  api:
+    build:
+      context: ./
+      dockerfile: local.api.Dockerfile
+    command: ['npm', 'run', 'dev']
+    ports:
+      - '8000:8000'
+    restart: on-failure
+    depends_on:
+      - api-watch
+      - mongo
+      - redis
+    environment:
+      USDC_CONTRACT: ''
+      CLIMATE_DAO_CONTRACT: ''
+      VIRTUAL_HOST: api.climatedao.docker
+      MONGO_URL: mongodb://mongo/climatedao
+      TOKEN_SECRET: this-is-a-secret-value-with-at-least-32-characters
+      ENC_SECRET: '0xd18f22c4c73847502816bfae8364ec29ce06f6161d85cc3edd2dceda50f2dc'
+      JSON_RPC: ''
+      INFURA_PROJECTID: ''
+      CHAIN_ID: '3'
+      NODE_ENV: ''
+      ASB_URL: ''
+      REDIS_URL: 'redis://:myR3d1sPa55w0rd@redis:6379'
+      ZOKRATES_WORKER_URL: 'http://zokrates-worker:8001'
+      COOKIE_DOMAIN: localhost
+      APPLICATION_URL: http://localhost:3000
+      ACUANT_URL: https://go-stg.acuant.com
+      ETHEREUM_EVENT_QUEUE_NAME: 'contract-event'
+      ACUANT_CERT: 'MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqPUvTUy2Pza92EGQGLpqIvnqTrZxrXRaAY1ZKuAKYOAmk56c3lJJbkZOczzgtSIN6S5AyNtp3GCUgiAdfoCkngbaRvhdK92+ij2tCglgwZVYMNFDLF5HbhU7Vohxk2aR3NDUzD2ruHt9MbD5/2f7cmyAHjDSvbH4x4dsgE7DHe/qdPjqhtXmSaWVIy2ProJqiaGgvOi+DtXnqddQvxmP5KsYqlvN2ZGizl1CWHpoN1wCsZMrJPyBxQ1t/lGv+3HGu3p3cjFgM/j6OJZzQscc3FLZ4f7rIMR2V31MeqbRpReReS3Ibw0xgdUxSumc8fISO8UBMdfhp3wL0MLCpUoyGQIDAQAB'
+      CRON_INTERVAL_IN_MINUTES: 1
+      RUN_JOBS: 'true'
+      ADMIN_ADDRESS: ''
+      ADMIN_PRIVATE_KEY: ''
+      ITX_PRIVATE_KEY: ''
+      ITX_ADDRESS: ''
+      GAS_PRICE: '50000000000'
+    volumes:
+      - ./packages/api/build:/app/build
+      - ./artifacts:/app/artifacts
+
+  api-watch:
+    build:
+      context: ./
+      dockerfile: local.api.Dockerfile
+    command: ['npm', 'run', 'watch']
+    volumes:
+      - ./packages/api/src:/app/src
+      - ./packages/api/build/:/app/build
+
+  zokrates-worker:
+    build:
+      context: ./
+      dockerfile: local.zokrates.Dockerfile
+    command: ['npm', 'run', 'dev']
+    ports:
+      - '8001:8001'
+    restart: on-failure
+    depends_on:
+      - zokrates-worker-watch
+      - redis
+    environment:
+      CIRCUITS_FOLDER: /app/circuits
+      OUTPUT_FOLDER: /app/output
+      REDIS_URL: 'redis://:myR3d1sPa55w0rd@redis:6379'
+    volumes:
+      - ./packages/zokrates-worker/build:/app/build
+      - ./packages/zokrates-worker/circuits:/app/circuits
+      - ./proving-files:/app/output
+
+  zokrates-worker-watch:
+    build:
+      context: ./
+      dockerfile: local.zokrates.Dockerfile
+    command: ['npm', 'run', 'watch']
+    volumes:
+      - ./packages/zokrates-worker/src:/app/src
+      - ./packages/zokrates-worker/build/:/app/build
+
+  event-listener:
+    build:
+      context: ./
+      dockerfile: local.listener.Dockerfile
+    command: ['npm', 'run', 'dev']
+    ports:
+      - '8002:8002'
+    restart: on-failure
+    depends_on:
+      - event-listener-watch
+      - redis
+    environment:
+      CHAIN_ID: '3'
+      ETHEREUM_EVENT_QUEUE_NAME: 'contract-event'
+      CLIMATE_DAO_CONTRACT: ''
+      JSON_RPC_WS: ''
+      REDIS_URL: 'redis://:myR3d1sPa55w0rd@redis:6379'
+    volumes:
+      - ./packages/event-listener/build:/app/build
+      - ./artifacts:/app/artifacts
+
+  event-listener-watch:
+    build:
+      context: ./
+      dockerfile: local.listener.Dockerfile
+    command: ['npm', 'run', 'watch']
+    volumes:
+      - ./packages/event-listener/src:/app/src
+      - ./packages/event-listener/build/:/app/build
+
+  mongo:
+    image: mongo:latest
+    volumes:
+      - mongo-volume:/data/db
+    logging:
+      options:
+        max-size: 10m
+    ports:
+      - 27017:27017
+
+  redis:
+    image: redis
+    container_name: redis
+    command: redis-server --requirepass myR3d1sPa55w0rd
+    expose:
+      - 6379
+
+  ganache:
+      image: trufflesuite/ganache-cli:latest
+      command: ganache-cli --defaultBalanceEther=1000 --gasLimit=100000000 --networkId '333' --deterministic --account="0x${ADMIN_PRIVATE_KEY},100000000000000000000000" --account="0xdfef75db9155cf6447761385643ce7f0ffce5f668d47b630cc7f54d515da7845,100000000000000000000000" --account="0x92587f4c85292a0507ff792a66d7c02b18d2cfa532dd828140427fb540e8e6ec,100000000000000000000000" # <- development network
+      ports:
+        - 8545:8545
+      volumes:
+          - blockchain-volume:/db
+  
+  
+
+  smart-contracts-security:
+      image: trailofbits/eth-security-toolbox
+      entrypoint: "bash -c 'slither /contracts --exclude-informational --exclude-low --exclude uninitialized-local-variables,divide-before-multiply --print human-summary'"
+      # Excluded as we cannot initialise a local fixed size array e.g. tallyBytes, and we cannot avoid division in Solidity in this project
+      volumes:
+        - ./contracts:/contracts:delegated
+
+volumes:
+  mongo-volume:
+  blockchain-volume:
+  proving-files:
