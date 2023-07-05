@@ -1,0 +1,26 @@
+{
+  "name": "climatedao-event-listener",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon build/index.js",
+    "start": "node build/index.js",
+    "build": "babel src -d build",
+    "watch": "babel src --watch -d build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bull": "3.29.3",
+    "ethers": "5.4.7",
+    "express": "4.17.1",
+    "winston": "3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.14.8",
+    "@babel/core": "7.15.0",
+    "@babel/preset-env": "7.15.0",
+    "nodemon": "2.0.12"
+  }
+}

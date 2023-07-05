@@ -1,0 +1,47 @@
+{
+  "name": "climatedao-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --runInBand --detectOpenHandles --testPathPattern=src/__tests__/dao.spec.js",
+    "enctest": "jest -- __tests__/elgamal.test.js",
+    "dev": "nodemon build/index.js",
+    "start": "node build/index.js",
+    "build": "babel src -d build",
+    "watch": "babel src --watch -d build"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@azure/identity": "1.5.2",
+    "@azure/keyvault-secrets": "4.3.0",
+    "@hapi/iron": "6.0.0",
+    "axios": "0.21.4",
+    "big-integer": "1.6.51",
+    "bull": "3.29.3",
+    "cookies": "0.8.0",
+    "cors": "2.8.5",
+    "ethers": "5.4.5",
+    "express": "4.17.1",
+    "express-validator": "6.12.1",
+    "helmet": "4.6.0",
+    "ioredis": "4.27.9",
+    "jsonwebtoken": "8.5.1",
+    "keccak": "3.0.0",
+    "mongoose": "6.0.3",
+    "randombytes": "2.1.0",
+    "uuid": "8.3.2",
+    "winston": "3.3.3"
+  },
+  "devDependencies": {
+    "@babel/cli": "7.14.8",
+    "@babel/core": "7.15.0",
+    "@babel/preset-env": "7.15.0",
+    "dotenv": "10.0.0",
+    "jest": "25.5.4",
+    "mongodb-memory-server": "7.4.2",
+    "nodemon": "2.0.12",
+    "supertest": "6.1.6"
+  }
+}

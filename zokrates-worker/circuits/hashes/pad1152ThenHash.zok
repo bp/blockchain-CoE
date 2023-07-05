@@ -1,0 +1,31 @@
+from "./1536" import main as sha256
+from "utils/casts/u64_to_bits.zok" import main as u64_to_bits
+from "utils/casts/u32_from_bits.zok" import main as u32_from_bits
+
+// Add padding to a 1152-bit message, then hash it.
+// CUSTOM
+def main(u32[16] a, u64[10] b)->(u32[8]):
+
+	u32[36] c = [...a, ...[0; 20]]
+
+	u32[12] padding = [ \
+        0x80000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+        0x00000000,
+		0x00000000,
+		0x00000000,
+		0x00000000,
+		0x00000000,
+        0x00000480
+    ]
+
+	for u32 i in 0..10 do
+		bool[64] num = u64_to_bits(b[i])
+		c[(2*i)+16] = u32_from_bits(num[0..32])
+		c[(2*i)+17] = u32_from_bits(num[32..64])
+	endfor
+	return sha256([...c, ...padding])

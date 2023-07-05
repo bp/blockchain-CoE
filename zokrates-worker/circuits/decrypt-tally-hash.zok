@@ -1,0 +1,112 @@
+from "ecc/edwardsScalarMult.zok" import main as scalarMult
+from "ecc/edwardsOnCurve.zok" import main as isOnCurve
+from "ecc/edwardsOrderCheck" import main as lowOrderCheck
+from "ecc/edwardsCompress" import main as edwardsCompress
+from "ecc/edwardsAdd.zok" import main as pointAdd
+from "ecc/edwardsNegate.zok" import main as pointNegate
+from "ecc/babyjubjubParams.zok" import main as curveParams
+from "utils/casts/u32_8_to_bool_256.zok" import main as u32_8_to_bool_256
+from "utils/casts/bool_256_to_u32_8.zok" import main as bool_256_to_u32_8
+from "utils/pack/bool/pack256.zok" import main as bool_256_to_field
+from "utils/casts/u64_to_bits.zok" import main as u64_to_bits
+
+from "./hashes/pad5120ThenHash" import main as innerHash
+from "./hashes/pad1152ThenHash" import main as outerHash
+
+// @params:
+// field publicInputHash,\ // hash of all public inputs (this saves gas)
+// private encryption[numProjects] totalVotesEnc,\ // the encrypted vote tally
+// private encryption[numProjects] totalContributionsEnc,\ //  the encrypted contribution amounts
+// private u64[numProjects] totalVotes,\ // the final vote tally
+// private u64[numProjects] totalContributions,\ // the final contribution amounts
+// private u32[8] secretKey\ // auth secret key
+
+// we can change this value before compile time, however any larger and we need to use different SHA hashes
+const u32 numProjects = 5
+// bool padding for type conversions
+const bool[192] padding = [false; 192]
+// an encrypted message has the form (R, S), a pair of curve points
+struct encryption {
+    field[2] R
+    field[2] S
+}
+// returns the point M where M = plaintext*generator
+def decrypt(encryption enc, u32[8] secretKey) -> (field[2]):
+    // check each point is on the curve
+    assert(lowOrderCheck(enc.R, curveParams()))
+    assert(lowOrderCheck(enc.S, curveParams()))
+    assert(isOnCurve(enc.R, curveParams()))
+    assert(isOnCurve(enc.S, curveParams()))
+    field[2] xR = scalarMult(u32_8_to_bool_256(secretKey), enc.R, curveParams())
+    field[2] res = pointAdd(enc.S, pointNegate(xR), curveParams())
+    return res
+
+// public inputs are set to private to save gas
+// instead, the only public inputs is the hash of these
+def main(\
+    field publicInputHash,\
+    private encryption[numProjects] totalVotesEnc,\
+    private encryption[numProjects] totalContributionsEnc,\
+    private u64[numProjects] totalVotes,\
+    private u64[numProjects] totalContributions,\
+    private u32[8] secretKey\
+) -> ():
+    // elliptic curve generator point
+    field[2] basePoint = [curveParams().Gu, curveParams().Gv]
+    // initialise storage for decrypted points
+    field[numProjects][2] votePoints = [[0,0]; numProjects]
+    field[numProjects][2] contributionPoints = votePoints
+    // initialise storage for compressed points for input hash
+    u32[numProjects*16] compressedVotes = [0; numProjects*16]
+    u32[numProjects*16] compressedContributions = compressedVotes
+    u32[8] compressedPublicKey = bool_256_to_u32_8(edwardsCompress(scalarMult(u32_8_to_bool_256(secretKey), basePoint, curveParams())))
+    // decrypt to find the message points
+    for u32 i in 0..numProjects do
+        // find the decrypted points
+        votePoints[i] = decrypt(totalVotesEnc[i], secretKey)
+        contributionPoints[i] = decrypt(totalContributionsEnc[i], secretKey)
+        // fill the array with compressed encrypted values for hashing
+        compressedVotes = [\
+            ...compressedVotes[0..16*i],\
+            ...bool_256_to_u32_8(edwardsCompress(totalVotesEnc[i].R)),\
+            ...bool_256_to_u32_8(edwardsCompress(totalVotesEnc[i].S)),\
+            ...[0; 16*(numProjects - (i + 1))]\
+            ]
+        compressedContributions = [\
+            ...compressedContributions[0..16*i],\
+            ...bool_256_to_u32_8(edwardsCompress(totalContributionsEnc[i].R)),\
+            ...bool_256_to_u32_8(edwardsCompress(totalContributionsEnc[i].S)),\
+            ...[0; 16*(numProjects - (i + 1))]\
+            ]
+    endfor
+    // check that our decryption satisfies
+    for u32 j in 0..numProjects do
+        bool[256] scalarVote = [...padding, ...u64_to_bits(totalVotes[j])]
+        assert(votePoints[j] == scalarMult(scalarVote, basePoint, curveParams()))
+        bool[256] scalarContribute = [...padding, ...u64_to_bits(totalContributions[j])]
+        assert(contributionPoints[j] == scalarMult(scalarContribute, basePoint, curveParams()))
+    endfor
+    // check the public inputs hash
+    u32[8] calcInnerHash = innerHash([\
+        ...compressedVotes,\
+        ...compressedContributions\
+    ])
+    // why two hashes?
+    // otherwise we need to hash 5696 bits, which won't fit in the embedded 5120 bit hash (assuming 5 projects)
+    u32[8] calcPublicInputsHash = outerHash([\
+        ...calcInnerHash,\
+        ...compressedPublicKey\
+        ],\
+        [...totalVotes,\
+        ...totalContributions\
+    ])
+	bool[256] publicInputsHashBool256Sliced = [\
+	     ...[false; 3],\
+	     ...u32_8_to_bool_256(calcPublicInputsHash)[3..256]\
+	]
+	assert(publicInputHash == bool_256_to_field(publicInputsHashBool256Sliced))
+	return
+
+// EXAMPLE WITNESS INPUT
+
+// 3615710282026506287829620688614142388142702278545053810925991949439626064896 13330876488651950915532049579443287533073958108555007505620697555134605136737 4204273787555479058888639937905698267646851711214371695087396394194229121563 16859390982308180443397886475416489746495368944561797559592279850797531469409 18948356809606590874040932650245087296153196417657670132445045366984479298994 17165224739113850375179589272056629071716483269115343561264436801905637607166 7110418339635304051972602016535843489434646973245362179289306704462246015781 12771347013136448210809817673175827420098922858139442875768500224166575493804 12935370233154178112637490025980831479346638700097777820705670758727130602391 1867939614600458354725124699025527898501760306166577203072218145152041543860 17360360713921394084699112774915742389741528976147420855027767358156476639149 11263777148466425830182341049570047963447123841990832128555497217516496581857 4561463580189140999985094976420618170373766690656184317483025527408036895071 15058103703150718420272092958826426379413707850442512509810821078909055983842 8737353391073202757393320575840313805138462095865380124861191879809096498981 8293768921476648382029869244864326256645207964123208805891147288809047793715 13771368828520797470390429231650402801256726602539096245198383375958504850583 4362542038528762588402526538006970302414543341131433210577317812088969793721 17245429062438111207842909430736902654077179409592823716753051397123890280287 11536675092841937043135862346119082373580033829025159153624561465062315584297 7334911970088731732059187882811375655260236416673105505826211383492764729120 1629074948798172710354132064115473150110634139339160464848301368847755092785 12904443820729028256674757752233642632827727865696694761916645061530918920714 6815340596189401467333036593885969211051040770744555490500737290985265049348 12173865732555944149890592851422491581937867905387077893423373921254124687359 13744712209677102777826310871138806858124474946135823039939620390136813749681 21437699368702393527390718584659600877460815968713090930622720045684210899361 4495909450105822758146250045108281891557099851199237285248842668352943315751 13359069691019676341624963009179611212127911495132250216368765376620117969034 17318117011189351313929664038585107504449178483661855583606925143202481339720 7735355528847045606803701469296248059864882160302204929116657434291360135298 16043710789782999188818686021457795735089065694473667389886828355078405250937 19550262997366630857974687707277647346020717623767240209650681971148227999752 9751137541112382664524729543360755981658099823786993003911255727585871049252 6548274289129274513554598150272434094932472806144206913030124830004747737024 17528526147745166817013154749320423913876495330765532610171284695863895776807 21186552210368396113144011375457196790702777024005775992233654356424167299623 2748514439712823359934938954361348153742979524012028036107499949962281981590 18138662333563040757526441631569117028735868648012966026999182475027939553429 14949894801311011476699984298818386912276211679218926558489416580918178383399 6130115810924666693107168309872481617242903720068425821627439006634300532542 114845741924 125803849603 118950605432 119326721451 106346133468 1368000000 1615000000 1465000000 1533000000 1238000000 13733666 3301390407 1344804543 2927846636 701368054 371033548 1054682574 3662738140
